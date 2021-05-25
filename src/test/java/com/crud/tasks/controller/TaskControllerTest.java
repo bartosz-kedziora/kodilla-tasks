@@ -85,24 +85,6 @@ class TaskControllerTest {
     }
 
     @Test
-    public void shouldGetAllTasks() throws Exception {
-        // Given
-        List<TaskDto> taskDtoList = new ArrayList<>();
-        taskDtoList.add(new TaskDto(1L, "test title", "test content"));
-
-        when(taskMapper.mapToTaskDtoList(anyList())).thenReturn(taskDtoList);
-        //When & Then
-        mockMvc.perform(MockMvcRequestBuilders
-                .get("/v1/task/getTasks")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect((MockMvcResultMatchers.status()).is(200))
-                .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(1)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id", Matchers.is(1)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].title", Matchers.is("test title")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].content", Matchers.is("test content")));
-    }
-
-    @Test
     public void shouldUpdateTask()throws Exception{
         // Given
         TaskDto taskDto = new TaskDto(1L, "test title", "test content");
@@ -112,6 +94,8 @@ class TaskControllerTest {
 
         Gson gson = new Gson();
         String cont = gson.toJson(taskDto);
+
+
         //When & Then
         mockMvc.perform(MockMvcRequestBuilders
                 .put("/v1/task/updateTask")
