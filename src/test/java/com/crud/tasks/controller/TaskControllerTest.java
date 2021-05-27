@@ -97,11 +97,12 @@ class TaskControllerTest {
 
 
         //When & Then
-        mockMvc.perform(MockMvcRequestBuilders
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
                 .put("/v1/task/updateTask")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
-                .content(cont))
+                .content(cont);
+        mockMvc.perform(requestBuilder)
                 .andExpect((MockMvcResultMatchers.status()).is(200))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.title", Matchers.is("updated title")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content", Matchers.is("updated content")));
@@ -116,10 +117,10 @@ class TaskControllerTest {
         when(taskMapper.mapToTaskDto(task)).thenReturn(taskDto);
 
         //When & Then
-        mockMvc.perform(MockMvcRequestBuilders
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
                 .delete("/v1/task/1")
-                .contentType(MediaType.APPLICATION_JSON)
-                .characterEncoding("UTF-8"))
+                .contentType(MediaType.APPLICATION_JSON);
+        mockMvc.perform(requestBuilder)
                 .andExpect((MockMvcResultMatchers.status()).is(200));
     }
 }
